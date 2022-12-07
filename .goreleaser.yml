@@ -1,0 +1,43 @@
+build:
+  binary: task
+  main: cmd/task/task.go
+  goos:
+    - windows
+    - darwin
+    - linux
+  goarch:
+    - 386
+    - amd64
+  ignore:
+    - goos: darwin
+      goarch: 386
+  env:
+    - CGO_ENABLED=0
+
+archives:
+  - name_template: "{{.Binary}}_{{.Os}}_{{.Arch}}"
+    format_overrides:
+      - goos: windows
+        format: zip
+
+release:
+  draft: true
+
+snapshot:
+  name_template: "{{.Tag}}"
+
+checksum:
+  name_template: "task_checksums.txt"
+
+nfpms:
+  - vendor: Task
+    homepage: https://github.com/go-task/task
+    maintainer: Andrey Nering <andrey.nering@gmail.com>
+    description: Simple task runner written in Go
+    license: MIT
+    conflicts:
+      - taskwarrior
+    formats:
+      - deb
+      - rpm
+    file_name_template: "{{.ProjectName}}_{{.Os}}_{{.Arch}}"

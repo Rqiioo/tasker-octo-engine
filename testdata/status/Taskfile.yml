@@ -1,0 +1,8 @@
+version: '3'
+
+tasks:
+  gen-foo:
+    cmds:
+      - touch foo.txt
+    status:
+      - test -f foo.txt
